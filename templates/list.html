@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+</head>
+<body>
+    <ul>
+        {% for u in users %}
+        <li>
+            <a href="/users/{{u.id}}">{{u.first_name ~ ' ' ~ u.last_name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="users/new">Create an Account</a>
+</body>
+</html>

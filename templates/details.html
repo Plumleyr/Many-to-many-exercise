@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="{{ user.image_url }}" alt="{{ user.first_name }}'s Image" style="max-width: 250px; max-height: 100px;">
+    <h1>{{user.first_name ~ ' ' ~ user.last_name }}</h1>
+    <form action="/users/{{user.id}}/edit">
+        <button>Edit</button style="display: inline;">
+    </form>
+    <form action="/users/{{user.id}}/delete">
+        <button>Delete</button>
+    </form>
+    <a href="/">Go Home</a>
+</body>
+</html>
