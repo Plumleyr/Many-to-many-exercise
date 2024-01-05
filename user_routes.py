@@ -79,39 +79,3 @@ def create_blogpost(user_id):
     db.session.commit()
 
     return redirect(f'/users/{user_id}')
-
-@users_bp.route('/posts/<blogpost_id>')
-def show_posts(blogpost_id):
-    blogpost = Blogpost.query.get_or_404(blogpost_id)
-    user = blogpost.user
-    return render_template('show_post.html', blogpost = blogpost, user = user)
-
-@users_bp.route('/posts/<blogpost_id>/edit')
-def edit_blogpost_form(blogpost_id):
-    blogpost = Blogpost.query.get_or_404(blogpost_id)
-    user = blogpost.user
-    return render_template('edit_post.html', blogpost =blogpost, user = user)
-
-@users_bp.route('/posts/<blogpost_id>/edit', methods = ['POST'])
-def edit_blogpost(blogpost_id):
-    blogpost = Blogpost.query.get_or_404(blogpost_id)
-    user = blogpost.user
-
-    blogpost.title = request.form['title']
-    blogpost.content = request.form['content']
-
-    db.session.add(blogpost)
-    db.session.commit()
-
-    return redirect(f'/users/{user.id}')
-
-@users_bp.route('/posts/<blogpost_id>/delete')
-def delete_blogpost(blogpost_id):
-
-    blogpost = Blogpost.query.get_or_404(blogpost_id)
-    user = blogpost.user
-
-    db.session.delete(blogpost)
-    db.session.commit()
-
-    return redirect(f'/users/{user.id}')
