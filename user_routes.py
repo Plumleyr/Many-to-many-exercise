@@ -1,5 +1,5 @@
 from flask import render_template,redirect, request, Blueprint
-from models import db, User, Blogpost
+from models import db, User, Blogpost, Tag, PostTag
 
 users_bp = Blueprint('users', __name__)
 
@@ -64,11 +64,15 @@ def delete_user(user_id):
 @users_bp.route('/users/<user_id>/posts/new')
 def create_blogpost_form(user_id):
     user = User.query.get_or_404(user_id)
-    return render_template('add_post.html', user = user)
+    tags = Tag.query.all()
+
+    return render_template('add_post.html', user = user, tags = tags)
 
 @users_bp.route('/users/<user_id>/posts/new', methods = ['POST'])
 def create_blogpost(user_id):
     user = User.query.get_or_404(user_id)
+
+    selected_tags = request.form.getlist('selected_tags')
 
     title = request.form['title']
     content = request.form['content']
@@ -76,6 +80,14 @@ def create_blogpost(user_id):
     new_blogpost = Blogpost(title = title, content = content, user = user)
 
     db.session.add(new_blogpost)
+    db.session.commit()
+
+    for tag_name in selected_tags:
+        tag = Tag.query.filter_by(tag_name = tag_name).first()
+        if tag:
+            post_tag = PostTag(post_id = new_blogpost.id, tag_id = tag.id)
+            db.session.add(post_tag)
+        
     db.session.commit()
 
     return redirect(f'/users/{user_id}')

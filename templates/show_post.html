@@ -8,8 +8,14 @@
 </head>
 <body>
     <h1>{{blogpost.title}}</h1>
-    <p>{{blogpost.content}}</p>
-    <p>By {{blogpost.user.first_name ~  ' ' ~ blogpost.user.last_name}}</p>
+        <p>{{blogpost.content}}</p>
+        <p>By {{blogpost.user.first_name ~  ' ' ~ blogpost.user.last_name}}</p>
+        <h4>Tags</h4>
+            <ul>
+                {% for tag in blogpost.tags %}
+                    <li><a href="/tags/{{tag.id}}">{{tag.tag_name}}</a></li>
+                {% endfor %}
+            </ul>
     <form action="/users/{{user.id}}">
         <button class="btn btn-info">
             Go Back

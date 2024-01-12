@@ -17,6 +17,13 @@
             <label for="content">Content</label>
             <input type="textbox" class="form-control" name="content">
         </div>
+        <div class="form-group">
+            <h3>Tags</h3>
+            {% for tag in tags %}
+                <input type="checkbox" name="selected_tags" value="{{tag.tag_name}}">
+                <label for="selected_tags">{{ tag.tag_name }}</label>
+            {% endfor %}
+        </div>
         <button class="btn btn-success">Add</button>
     </form>
     <form action="/users/{{user.id}}">
